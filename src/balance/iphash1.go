@@ -1,5 +1,5 @@
 /**
- * iphash-consistent.go - consistent iphash balance impl
+ * iphash1.go - semi-consistent iphash balance impl
  *
  * @author Illarion Kovalchuk <illarion.kovalchuk@gmail.com>
  */
@@ -15,16 +15,17 @@ import (
 /**
  * Iphash balancer
  */
-type IphashConsistentBalancer struct {
+type Iphash1Balancer struct {
 }
 
 /**
- * Elect backend using consistent iphash strategy. This is naive implementation
+ * Elect backend using semi-consistent iphash strategy. This is naive implementation
  * using Key+Node Hash Algorithm for stable sharding described at http://kennethxu.blogspot.com/2012/11/sharding-algorithm.html
+ * It survives removing nodes (removing stability), so that clients connected to backends that have not been removed stay
+ * untouched.
  *
- * TODO: Improve as needed
  */
-func (b *IphashConsistentBalancer) Elect(context core.Context, backends []*core.Backend) (*core.Backend, error) {
+func (b *Iphash1Balancer) Elect(context core.Context, backends []*core.Backend) (*core.Backend, error) {
 
 	if len(backends) == 0 {
 		return nil, errors.New("Can't elect backend, Backends empty")

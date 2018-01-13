@@ -7,7 +7,6 @@ import (
 	"fmt"
 	"math/rand"
 	"testing"
-	"time"
 )
 
 func makeDistribution(balancer core.Balancer, backends []*core.Backend, clients []DummyContext) (map[string]*core.Backend, error) {
@@ -69,9 +68,10 @@ func prepareClients(n int) []DummyContext {
 }
 
 //TODO enable test when real consisten hashing will be implemented
-func _TestConsistentIPHashAddingBackendsRedistribution(t *testing.T) {
+/*
+func TestIPHash2AddingBackendsRedistribution(t *testing.T) {
 	rand.Seed(time.Now().Unix())
-	balancer := &balance.IphashConsistentBalancer{}
+	balancer := &balance.Iphash2Balancer{}
 
 	N := 50   // initial number of backends
 	M := 1    // added number of backends
@@ -114,10 +114,11 @@ func _TestConsistentIPHashAddingBackendsRedistribution(t *testing.T) {
 	}
 
 }
+*/
 
-func TestConsistentIPHashRemovingBackendsStability(t *testing.T) {
+func TestIPHash1RemovingBackendsStability(t *testing.T) {
 
-	balancer := &balance.IphashConsistentBalancer{}
+	balancer := &balance.Iphash1Balancer{}
 
 	backends := prepareBackends("127.0.0", 4)
 	clients := prepareClients(100)
